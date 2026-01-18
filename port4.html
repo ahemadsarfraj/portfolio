@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analyst Profile</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        /* Loading screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #007bff, #28a745);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeOut 2s ease-in-out 2s forwards;
+        }
+        #loading h1 {
+            color: white;
+            font-size: 2em;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        /* Subtle animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0,123,255,0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,123,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            animation: slideUp 1s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid #007bff;
+            animation: bounceIn 1.5s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section h2 {
+            color: #28a745;
+            margin-bottom: 10px;
+            animation: fadeInLeft 1s ease-out both;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+            background: #d1ecf1;
+        }
+        .project {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        .project:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .chart-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #e9ecef, #f8f9fa);
+            border: 1px dashed #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            margin-top: 10px;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, textarea, button {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #0056b3;
+            text-shadow: 0 0 5px rgba(0,123,255,0.5);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInLeft {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading"><h1>Loading Data Insights...</h1></div>
+    <div class="container">
+        <img src="dd.jpeg" alt="Your Photo" class="profile-pic">  <!-- Replace with your image -->
+        <h1>My self sarfraj Ahmad - Data Analyst</h1>
+        <div class="section" id="about">
+            <h2>About Me</h2>
+            <p>I am a BCA graduate with a keen interest in data analysis and business insights.
+                I have knowledge of Excel, SQL, and basic Python for data cleaning and analysis.
+                I enjoy working with data, finding patterns, and creating meaningful reports.
+                I am looking for an entry-level role where I can enhance my analytical skills
+                and grow as a data professional.</p>
+        </div>
+        <div class="section" id="skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>Python (Pandas, NumPy, Matplotlib)</li>
+                <li>SQL & Database Management (MySQL, PostgreSQL)</li>
+                <li>Data Visualization (Tableau, Power BI)</li>
+                <li>Statistical Analysis (R, Excel)</li>                
+            </ul>
+        </div>
+        
+        <div class="section" id="contact">
+            <h2>Contact</h2>
+            <form id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+            <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
+            <p>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a> (for code samples)</p>
+        </div>
+    </div>
+
+    <script>
+        // Loading screen fade
+        setTimeout(() => document.getElementById('loading').style.display = 'none', 2000);
+
+        // Scroll-triggered animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.section').forEach(section => observer.observe(section));
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Message sent! (Demo - integrate with a backend for real functionality)');
+        });
+    </script>
+</body>
+</html>

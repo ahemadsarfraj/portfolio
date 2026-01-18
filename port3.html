@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra-Advanced Futuristic Profile</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e);
+            color: #00ffff;
+            overflow-x: hidden;
+            cursor: none;
+            transition: background 0.5s;
+        }
+        body.dark-mode {
+            background: linear-gradient(45deg, #1a1a2e, #0a0a0a);
+        }
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeOut 2s ease-in-out 3s forwards;
+        }
+        #loading h1 {
+            color: #ff00ff;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        .cursor { /* Same as before */ }
+        #threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px #00ffff;
+            animation: slideUp 1.5s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+            animation: glow 2s infinite alternate, floatPic 3s ease-in-out infinite;
+            cursor: grab;
+        }
+        .profile-pic:active { cursor: grabbing; }
+        h1 {
+            text-align: center;
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff;
+            animation: textGlow 3s infinite alternate;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px #ff00ff;
+        }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; transition: transform 0.3s; }
+        li:hover { transform: translateX(15px); color: #ff00ff; }
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .project-card:hover { transform: rotateY(10deg); box-shadow: 0 0 15px #00ffff; }
+        #chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+        }
+        #chatbot.show { display: block; }
+        #chat-messages { height: 200px; overflow-y: auto; }
+        #chat-input { width: 100%; margin-top: 10px; }
+        button { background: #ff00ff; color: #fff; border: none; padding: 5px 10px; cursor: pointer; }
+        button:hover { background: #00ffff; }
+        a { color: #00ffff; text-decoration: none; transition: color 0.3s; }
+        a:hover { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+        /* Keyframes */
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes glow { from { box-shadow: 0 0 20px #ff00ff; } to { box-shadow: 0 0 30px #ff00ff, 0 0 40px #ff00ff; } }
+        @keyframes textGlow { from { text-shadow: 0 0 15px #00ffff; } to { text-shadow: 0 0 25px #00ffff, 0 0 35px #00ffff; } }
+        @keyframes floatPic { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body>
+    <div id="loading"><h1>Initializing Hologram...</h1></div>
+    <div id="threejs-bg"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="container">
+        <img src="your-photo.jpg" alt="Your Photo" class="profile-pic" id="profilePic">
+        <h1>Your Name</h1>
+        <button id="darkModeToggle">Toggle Dark Mode</button>
+        <div class="section" id="about">
+            <h2>About Me</h2>
+            <p id="bio">Loading futuristic bio...</p>
+        </div>
+        <div class="section" id="skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>Quantum Computing Mastery</li>
+                <li>Neural Network Design</li>
+                <li>Holographic Interfaces</li>
+            </ul>
+        </div>
+        <div class="section" id="projects">
+            <h2>Projects</h2>
+            <div class="project-card">
+                <h3>Project 1: AI Hologram</h3>
+                <p>A futuristic interface for virtual reality.</p>
+            </div>
+            <div class="project-card">
+                <h3>Project 2: Cyber Security Bot</h3>
+                <p>Automated defense against digital threats.</p>
+            </div>
+        </div>
+        <div class="section" id="contact">
+            <h2>Contact</h2>
+            <p>Links: <a href="mailto:your.email@example.com">Email</a> | <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a></p>
+        </div>
+    </div>
+    <button id="chatToggle" style="position: fixed; bottom: 20px; right: 20px;">AI Chat</button>
+    <div id="chatbot">
+        <div id="chat-messages"></div>
+        <input type="text" id="chat-input" placeholder="Ask me something...">
+        <button id="sendChat">Send</button>
+    </div>
+
+    <script>
+        // Loading screen
+        setTimeout(() => document.getElementById('loading').style.display = 'none', 3000);
+
+        // Three.js 3D background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('threejs-bg').appendChild(renderer.domElement);
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        camera.position.z = 5;
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        });
+        document.querySelectorAll('.section').forEach(section => observer.observe(section));
+
+        // Typing effect
+        const bioText = "Welcome to my digital realm. I'm a [your profession, e.g., AI engineer] from the future, exploring [hobbies or interests]. This profile is a portal to my cybernetic existence.";
+        let i = 0;
+        const bioElement = document.getElementById('bio');
+        function typeWriter() {
+            if (i < bioText.length) {
+                bioElement.innerHTML += bioText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        typeWriter();
+
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Drag profile pic
+        let isDragging = false;
+        const pic = document.getElementById('profilePic');
+        pic.addEventListener('mousedown', () => isDragging = true);
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                pic.style.left = e.clientX - 75 + 'px';
+                pic.style.top = e.clientY - 75 + 'px';
+                pic.style.position = 'absolute';
+            }
+        });
+        document.addEventListener('mouseup', () => isDragging = false);
+
+        // Dark mode toggle
+        document.getElementById('darkModeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            playSound(); // Sound effect
+        });
+
+        // AI Chat demo
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendChat = document.getElementById('sendChat');
+        const chatToggle = document.getElementById('chatToggle');
+        const chatbot = document.getElementById('chatbot');
+        chatToggle.addEventListener('click', () => chatbot.classList.toggle('show'));
+        sendChat.addEventListener('click', () => {
+            const msg = chatInput.value;
+            if (msg) {
+                chatMessages.innerHTML += `<p>You: ${msg}</p>`;
+                let response = 'I am your futuristic AI assistant. Ask me about skills or projects!';
+                if (msg.toLowerCase().includes('who')) response = 'I am a hologram of [Your Name], an AI engineer.';
+                chatMessages.innerHTML += `<p>AI: ${response}</p>`;
+                chatInput.value = '';
+                playSound();
+            }
+        });
+
+        // Sound effect function
+        function playSound() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.1);
+        }
+    </script>
+</body>
+</html>
