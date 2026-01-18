@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Data Analyst</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- Reuse Core Variables & Reset --- */
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #38bdf8;
+            /* Cyan */
+            --accent-secondary: #818cf8;
+            /* Indigo */
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            /* Lock scroll for focused contact page */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- Animated Background Canvas --- */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        }
+
+        /* --- Navbar (Back Button) --- */
+        .nav-back {
+            position: absolute;
+            top: 30px;
+            left: 5%;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            transition: 0.3s;
+        }
+
+        .nav-back:hover {
+            transform: translateX(-5px);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* --- Main Contact Container --- */
+        .contact-wrapper {
+            display: flex;
+            width: 80%;
+            max-width: 1000px;
+            height: 600px;
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Left Side: Info --- */
+        .contact-info {
+            flex: 1;
+            padding: 50px;
+            background: rgba(15, 23, 42, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(56, 189, 248, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            transition: 0.3s;
+            border: 1px solid var(--accent-color);
+        }
+
+        .info-item:hover .icon-box {
+            background: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        .info-text p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .info-text strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+
+        /* Decorative circles behind info */
+        .circle-decor {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: var(--accent-secondary);
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(50px);
+        }
+
+        .c1 {
+            top: -50px;
+            left: -50px;
+        }
+
+        .c2 {
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* --- Right Side: Form --- */
+        .contact-form {
+            flex: 1.2;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #334155;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+            resize: none;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        /* Focus Effects */
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group input:valid,
+        .form-group textarea:valid {
+            border-bottom-color: var(--accent-color);
+        }
+
+        .form-group input:focus~label,
+        .form-group textarea:focus~label,
+        .form-group input:valid~label,
+        .form-group textarea:valid~label {
+            top: -20px;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            padding: 15px;
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+                padding: 50px 0;
+            }
+
+            .contact-wrapper {
+                flex-direction: column;
+                height: auto;
+                width: 90%;
+            }
+
+            .contact-info {
+                padding: 30px;
+            }
+
+            .contact-form {
+                padding: 30px;
+            }
+
+            .nav-back {
+                top: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <a href="index.html" class="nav-back">
+        <i class="fas fa-arrow-left"></i> Return to Portfolio
+    </a>
+
+    <div class="contact-wrapper" data-aos="zoom-in" data-aos-duration="1000">
+
+        <div class="contact-info">
+            <div class="circle-decor c1"></div>
+            <div class="circle-decor c2"></div>
+
+            <h2>Let's Discuss Data</h2>
+            <p style="color: #94a3b8; margin-bottom: 40px;">
+                Ready to optimize your business with data-driven solutions? Fill out the form or reach out directly.
+            </p>
+
+            <div class="info-item">
+                <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                <div class="info-text">
+                    <strong>Email</strong>
+                    <p>ahemad000a@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="icon-box"><i class="fas fa-phone-alt"></i></div>
+                <div class="info-text">
+                    <strong>Phone</strong>
+                    <p>+91 9517******</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="info-text">
+                    <strong>Location</strong>
+                    <p>Remote / Ahmedabad, India</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form id="dataForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <input type="text" id="name" required>
+                    <label>Your Name</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" required>
+                    <label>Email Address</label>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="message" rows="4" required></textarea>
+                    <label>Project Details / Message</label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span>Send Message</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // 1. Initialize Animations
+        AOS.init();
+
+        // 2. Form Handling Animation
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+
+            // Change button state
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing Data...';
+            btn.style.opacity = "0.7";
+
+            // Simulate Server Delay (2 seconds)
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> Data Transmitted';
+                btn.style.backgroundColor = "#10b981"; // Green color
+                btn.style.borderColor = "#10b981";
+                btn.style.color = "white";
+
+                // Reset form
+                document.getElementById('dataForm').reset();
+
+                // Restore button after 3 seconds
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.backgroundColor = "transparent";
+                    btn.style.borderColor = "#38bdf8";
+                    btn.style.color = "#38bdf8";
+                    btn.style.opacity = "1";
+                }, 3000);
+            }, 2000);
+        }
+
+        // 3. Background Animation (Kept consistent with Home Page)
+        const canvas = document.getElementById('canvas-bg');
+        const c = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() * 1.5) - 0.75;
+                this.speedY = (Math.random() * 1.5) - 0.75;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                c.fillStyle = '#38bdf8';
+                c.beginPath();
+                c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                c.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                // Connect dots (Slightly different logic: less dense for cleaner form view)
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        c.beginPath();
+                        c.strokeStyle = `rgba(56, 189, 248, ${1 - distance / 100})`;
+                        c.lineWidth = 1;
+                        c.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        c.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        c.stroke();
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
+</body>
+
+</html>

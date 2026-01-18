@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Analyst Portfolio</title>
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    
+
     <style>
         /* --- CSS Variables & Reset --- */
         :root {
             --bg-color: #0f172a;
-            --accent-color: #38bdf8; /* Cyan */
-            --accent-secondary: #818cf8; /* Indigo */
+            --accent-color: #38bdf8;
+            /* Cyan */
+            --accent-secondary: #818cf8;
+            /* Indigo */
             --glass-bg: rgba(30, 41, 59, 0.7);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -56,7 +59,7 @@
             align-items: center;
             z-index: 1000;
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
@@ -101,9 +104,11 @@
             flex-direction: column;
             justify-content: center;
         }
-        .kp{
+
+        .kp {
             opacity: 1;
         }
+
         h2 {
             font-size: 2.5rem;
             margin-bottom: 3rem;
@@ -168,7 +173,7 @@
             background: var(--glass-bg);
             padding: 2rem;
             border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
         }
 
@@ -199,7 +204,7 @@
 
         .project-card {
             background: var(--glass-bg);
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             padding: 20px;
             transition: 0.4s;
@@ -210,13 +215,14 @@
         .project-card:hover {
             transform: translateY(-10px);
             border-color: var(--accent-color);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
         .project-img {
             width: 100%;
             height: 150px;
-            background: #2a3441; /* Placeholder color */
+            background: #2a3441;
+            /* Placeholder color */
             border-radius: 10px;
             margin-bottom: 15px;
             display: flex;
@@ -268,12 +274,23 @@
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .skills-container { grid-template-columns: 1fr; }
-            .nav-links { display: none; } /* Simplified for mobile demo */
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Simplified for mobile demo */
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="canvas-bg"></canvas>
@@ -325,11 +342,12 @@
     <section id="projects">
         <h2 data-aos="zoom-in">Featured Projects</h2>
         <div class="project-grid">
-            
+
             <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="project-img"><i class="fas fa-chart-line"></i></div>
                 <h3>Sales Forecasting Model</h3>
-                <p>Analyzed 5 years of retail data using Python (Prophet) to predict future sales trends with 92% accuracy.</p>
+                <p>Analyzed 5 years of retail data using Python (Prophet) to predict future sales trends with 92%
+                    accuracy.</p>
                 <div class="project-links">
                     <a href="#"><i class="fab fa-github"></i> Code</a>
                     <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
@@ -339,7 +357,8 @@
             <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="project-img"><i class="fas fa-database"></i></div>
                 <h3>Customer Churn SQL Analysis</h3>
-                <p>Complex SQL queries on a 1M+ row database to identify churn patterns and visualize them in Tableau.</p>
+                <p>Complex SQL queries on a 1M+ row database to identify churn patterns and visualize them in Tableau.
+                </p>
                 <div class="project-links">
                     <a href="#"><i class="fab fa-github"></i> Code</a>
                     <a href="#"><i class="fas fa-external-link-alt"></i> Dashboard</a>
@@ -362,16 +381,17 @@
     <section id="contact" class="contact">
         <h2 data-aos="fade-down">Let's Connect</h2>
         <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
-            Currently looking for new opportunities. Whether you have a question or just want to say hi, my inbox is always open.
+            Currently looking for new opportunities. Whether you have a question or just want to say hi, my inbox is
+            always open.
         </p>
-        <a href="ahemad000a@gmail.com" class="btn">Say Hello</a>
-        
+        <a href="file:///D:/sarfraj/cont_port.html" class="btn">Say Hello</a>
+
         <div class="social-links">
             <a href="https://www.linkedin.com/in/sarfraj-ahmad-135b5119a/"><i class="fab fa-linkedin"></i></a>
             <a href="https://github.com/ahemadsarfraj"><i class="fab fa-github"></i></a>
             <a href="#"><i class="fab fa-kaggle"></i></a>
         </div>
-        
+
         <footer style="margin-top: 50px; font-size: 0.8rem; color: #475569;">
             &copy; 2024 Data Analyst Portfolio. Built with Code.
         </footer>
@@ -394,7 +414,7 @@
 
         function type() {
             const currentPhrase = phrases[phraseIndex];
-            
+
             if (isDeleting) {
                 textElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
@@ -423,10 +443,10 @@
         const skillsChart = new Chart(ctx, {
             type: 'radar',
             data: {
-                labels: ['Python', 'SQL', 'power BI','Excel', 'Statistics', 'Communication'],
+                labels: ['Python', 'SQL', 'power BI', 'Excel', 'Statistics', 'Communication'],
                 datasets: [{
                     label: 'Skills Proficiency',
-                    data: [95, 100, 85,95, 90, 100],
+                    data: [95, 100, 85, 95, 90, 100],
                     backgroundColor: 'rgba(56, 189, 248, 0.2)',
                     borderColor: '#38bdf8',
                     pointBackgroundColor: '#fff',
@@ -440,7 +460,7 @@
                     r: {
                         angleLines: { color: 'rgba(255,255,255,0.1)' },
                         grid: { color: 'rgba(255,255,255,0.1)' },
-                        pointLabels: { color: '#94a3b8', font: {size: 14} },
+                        pointLabels: { color: '#94a3b8', font: { size: 14 } },
                         ticks: { display: false } // Hide numbers
                     }
                 },
@@ -502,7 +522,7 @@
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     if (distance < 100) {
                         c.beginPath();
-                        c.strokeStyle = `rgba(56, 189, 248, ${1 - distance/100})`;
+                        c.strokeStyle = `rgba(56, 189, 248, ${1 - distance / 100})`;
                         c.lineWidth = 0;
                         c.moveTo(particlesArray[i].x, particlesArray[i].y);
                         c.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -522,4 +542,5 @@
         animate();
     </script>
 </body>
+
 </html>
